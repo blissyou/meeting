@@ -5,6 +5,7 @@ import org.elitclass.meeting.domain.user.entity.UserEntity;
 import org.elitclass.meeting.domain.user.entity.enums.UserRole;
 import org.elitclass.meeting.domain.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,13 +13,14 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
         if (userRepository.count() == 0) {
             UserEntity admin = new UserEntity();
             admin.setUsername("admin");
-            admin.setPassword("admin1234");
+            admin.setPassword(passwordEncoder.encode("admin1234"));
             admin.setName("관리자");
             admin.setDepartment("관리부서");
             admin.setEmail("admin@university.ac.kr");
